@@ -23,12 +23,21 @@ class App extends Component {
   onKeyUp = async e => {
     const { searchdata } = this.state;
     if (searchdata !== "") {
-      const res = await axios.get(
+      /* const res = await axios.get(
         `https://api.github.com/search/users?q=${searchdata}`
       );
 
       const users = await res.data.items;
-      this.setState({ users });
+      this.setState({ users }); */
+      try {
+        const res = await axios.get(
+          `https://api.github.com/search/users?q=${searchdata}&client_id=69b2d4e67c079d9f9f99&client_secret=c5fe6f92f57cb9bbeceec93a6f2fa90e07a6372f`
+        );
+        const users = res.data.items;
+        this.setState({ users });
+      } catch (e) {
+        console.log("error", e.response);
+      }
     } else {
       this.setState({ users: [] });
     }
